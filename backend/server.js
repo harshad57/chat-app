@@ -53,11 +53,7 @@ app.use('/api/chat', chatRouter);
 app.use(notFound);
 app.use(errorHandler);
 
-if(process.env.NODE_ENV !== "production"){
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
   console.log(`🚀 Server is running`);
 });
-}
-
-exports.default = server;
