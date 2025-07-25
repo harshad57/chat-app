@@ -65,10 +65,10 @@ function Chat() {
   }, [selectedUser]);
 
   const sendMessage = async (e) => {
-    e.preventDefault();
-    if (!input.trim() && !selectedImage) return;
-    await sendmsg({ text: input.trim(), image: selectedImage });
-    setloading(true);
+  e.preventDefault();
+  if (!input.trim() && !selectedImage) return;
+
+  setloading(true);
   try {
     await sendmsg({ text: input.trim(), image: selectedImage });
     setInput('');
@@ -76,7 +76,7 @@ function Chat() {
   } finally {
     setloading(false);
   }
-  };
+};
 
   const sendImage = async (e) => {
     const file = e.target.files[0];
