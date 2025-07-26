@@ -3,7 +3,7 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import { io } from 'socket.io-client';
 
-const backendurl = 'https://chat-app-backend-w6b6.onrender.com';
+const backendurl = import.meta.env.BACKEND_URL || "https://chat-app-backend-w6b6.onrender.com";
 
 export const Authcontext = createContext();
 
