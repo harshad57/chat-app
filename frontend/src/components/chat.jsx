@@ -232,7 +232,7 @@ function Chat() {
           flexDirection="column"
           position="relative"
         >
-          <VStack spacing={4} align="stretch" w="100%" bottom={0} px={10} py={10}>
+          <VStack spacing={4} align="stretch" w="100%" bottom={0} px={{ base: 2, md: 10 }} py={{ base: 2, md: 10 }}>
             {selectedUser ? (
               msgs.length === 0 ? (
                 <Text color="gray.400" textAlign="center">No messages yet.</Text>
@@ -279,8 +279,8 @@ function Chat() {
                               boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
                               maxWidth: '200px',
                               display: 'block'
-                            }} 
-                            onClick={() => setOpenImage(msg.image)} />
+                            }}
+                              onClick={() => setOpenImage(msg.image)} />
                           )}
                           {msg.text && (
                             <Box mt={msg.image ? 2 : 0}>{msg.text}</Box>
@@ -317,44 +317,44 @@ function Chat() {
         </Box>
 
         {openImage && (
-        <Box
-          position="fixed"
-          top={0}
-          left={0}
-          w="100vw"
-          h="100vh"
-          bg="rgba(0,0,0,0.8)"
-          zIndex={2000}
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          style={{ backdropFilter: 'blur(6px)' }}
-        >
-          <IconButton
-            icon={<CloseIcon />}
-            aria-label="Close"
-            position="absolute"
-            top={6}
-            right={6}
-            size="lg"
-            colorScheme="whiteAlpha"
-            bg="rgba(0,0,0,0.5)"
-            onClick={() => setOpenImage(null)}
-            zIndex={2100}
-          />
-          <img
-            src={openImage}
-            alt="fullscreen"
-            style={{
-              maxWidth: '90vw',
-              maxHeight: '85vh',
-              borderRadius: 12,
-              boxShadow: '0 4px 32px rgba(0,0,0,0.5)',
-              background: 'white'
-            }}
+          <Box
+            position="fixed"
+            top={0}
+            left={0}
+            w="100vw"
+            h="100vh"
+            bg="rgba(0,0,0,0.8)"
+            zIndex={2000}
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            style={{ backdropFilter: 'blur(6px)' }}
+          >
+            <IconButton
+              icon={<CloseIcon />}
+              aria-label="Close"
+              position="absolute"
+              top={6}
+              right={6}
+              size="lg"
+              colorScheme="whiteAlpha"
+              bg="rgba(0,0,0,0.5)"
+              onClick={() => setOpenImage(null)}
+              zIndex={2100}
             />
-        </Box>
-      )}
+            <img
+              src={openImage}
+              alt="fullscreen"
+              style={{
+                maxWidth: '90vw',
+                maxHeight: '85vh',
+                borderRadius: 12,
+                boxShadow: '0 4px 32px rgba(0,0,0,0.5)',
+                background: 'white'
+              }}
+            />
+          </Box>
+        )}
 
         {/* Input */}
         {selectedImage && (
