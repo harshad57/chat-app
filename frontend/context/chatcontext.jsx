@@ -11,7 +11,7 @@ export const Chatprovider = ({children}) => {
     const [selectedUser, setSelectedUser] = useState(null);
     const [unseenmsg, setunseenmsg] = useState({});
 
-    const {socket, axios} = useContext(Authcontext);
+    const {socket, axios, authuser } = useContext(Authcontext);
 
     const getusers = async () => {
         try {
@@ -53,9 +53,14 @@ export const Chatprovider = ({children}) => {
         if(!socket) return;
 
         socket.on('newmsg', (newmsg) => {
-            if(selectedUser && newmsg.sender === selectedUser._id){
+            if(selectedUser && 
+          (newmsg.sender === selectedUser._id || newmsg.sender === authuser._id && newmsg.receiver === selectedUser._id)
+        ){
                 newmsg.seen = true;
-                setmsgs((prevMsg) => [...prevMsg, newmsg]);
+                setmsgs((prevMsg) => {
+                if (prevMsg.some(m => m._id === newmsg._id)) return prevMsg;
+                return [...prevMsg, newmsg];
+            });
                 axios.put(`https://chat-app-backend-w6b6.onrender.com/api/chat/mark/${newmsg._id}`);
             } else {
                 setunseenmsg((prevMsg) => ({
