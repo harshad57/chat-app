@@ -269,14 +269,14 @@ function Chat() {
                         >
                           {msg.image && (
                             <img src={msg.image} alt="sent" style={{
-                              maxWidth: '220px',
-                              maxHeight: '180px',
-                              width: 'auto',
+                              width: '100%',
                               height: 'auto',
                               borderRadius: 8,
                               marginBottom: msg.text ? 8 : 0,
                               objectFit: 'cover',
-                              boxShadow: '0 2px 8px rgba(0,0,0,0.08)'
+                              boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+                              maxWidth: '200px',
+                              display: 'block'
                             }} />
                           )}
                           {msg.text && (
