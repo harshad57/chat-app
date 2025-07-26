@@ -5,18 +5,18 @@ import toast from 'react-hot-toast';
 
 export const Chatcontext = createContext();
 
-export const Chatprovider = ({children}) => {
+export const Chatprovider = ({ children }) => {
     const [msgs, setmsgs] = useState([]);
     const [users, setusers] = useState([]);
     const [selectedUser, setSelectedUser] = useState(null);
     const [unseenmsg, setunseenmsg] = useState({});
 
-    const {socket, axios, authuser } = useContext(Authcontext);
+    const { socket, axios, authuser } = useContext(Authcontext);
 
     const getusers = async () => {
         try {
-            const {data} = await axios.get('https://chat-app-backend-w6b6.onrender.com/api/chat/users');
-            if(data.success){
+            const { data } = await axios.get('https://chat-app-backend-w6b6.onrender.com/api/chat/users');
+            if (data.success) {
                 setusers(data.users)
                 setunseenmsg(data.unseenmsg)
             }
@@ -27,8 +27,8 @@ export const Chatprovider = ({children}) => {
 
     const getmsg = async (userId) => {
         try {
-            const {data} = await axios.get(`https://chat-app-backend-w6b6.onrender.com/api/chat/msgs/${userId}`);
-            if(data.success){
+            const { data } = await axios.get(`https://chat-app-backend-w6b6.onrender.com/api/chat/msgs/${userId}`);
+            if (data.success) {
                 setmsgs(data.msgs)
             }
         } catch (error) {
@@ -37,11 +37,11 @@ export const Chatprovider = ({children}) => {
     }
 
     const sendmsg = async (msgData) => {
-        try{
-            const {data} = await axios.post(`https://chat-app-backend-w6b6.onrender.com/api/chat/send/${selectedUser._id}`, msgData);
-            if(data.success){
+        try {
+            const { data } = await axios.post(`https://chat-app-backend-w6b6.onrender.com/api/chat/send/${selectedUser._id}`, msgData);
+            if (data.success) {
                 setmsgs(prevMsg => [...prevMsg, data.newmsg])
-            } else{
+            } else {
                 toast.error(data.msg);
             }
         } catch (error) {
@@ -50,28 +50,28 @@ export const Chatprovider = ({children}) => {
     }
 
     const subtomsg = async () => {
-        if(!socket) return;
+        if (!socket) return;
 
         socket.on('newmsg', (newmsg) => {
-            if(selectedUser && 
-          (newmsg.sender === selectedUser._id || newmsg.sender === authuser._id && newmsg.receiver === selectedUser._id)
-        ){
+            if (selectedUser &&
+                (newmsg.sender === selectedUser._id || newmsg.sender === authuser._id && newmsg.receiver === selectedUser._id)
+            ) {
                 newmsg.seen = true;
                 setmsgs((prevMsg) => {
-                if (prevMsg.some(m => m._id === newmsg._id)) return prevMsg;
-                return [...prevMsg, newmsg];
-            });
+                    if (prevMsg.some(m => m._id === newmsg._id)) return prevMsg;
+                    return [...prevMsg, newmsg];
+                });
                 axios.put(`https://chat-app-backend-w6b6.onrender.com/api/chat/mark/${newmsg._id}`);
             } else {
                 setunseenmsg((prevMsg) => ({
-                    ...prevMsg, [newmsg.sender] : prevMsg[newmsg.sender] ? prevMsg[newmsg.sender] + 1 : 1
+                    ...prevMsg, [newmsg.sender]: prevMsg[newmsg.sender] ? prevMsg[newmsg.sender] + 1 : 1
                 }))
             }
         })
     }
 
     const unsubtomsg = async () => {
-        if(socket) socket.off('newmsg');
+        if (socket) socket.off('newmsg');
     }
 
     useEffect(() => {
@@ -79,14 +79,14 @@ export const Chatprovider = ({children}) => {
         return () => {
             unsubtomsg();
         }
-    },[socket, selectedUser])
+    }, [socket, selectedUser])
 
     const value = {
         msgs, users, selectedUser, getusers, sendmsg, setmsgs, setSelectedUser, unseenmsg, setunseenmsg, getmsg
     }
-    return(
-    <Chatcontext.Provider value={value}>
-        {children}
-    </Chatcontext.Provider>
+    return (
+        <Chatcontext.Provider value={value}>
+            {children}
+        </Chatcontext.Provider>
     )
 }

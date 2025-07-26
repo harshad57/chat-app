@@ -34,7 +34,7 @@ const getmsgs = async (req, res) => {
         { sender: myId, receiver: selectedUser },
         { sender: selectedUser, receiver: myId }
       ]
-    });
+    }).sort({ createdAt: 1 });
 
     await Msg.updateMany({ sender: selectedUser, receiver: myId }, { seen: true });
 
