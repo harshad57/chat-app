@@ -232,7 +232,7 @@ function Chat() {
           flexDirection="column"
           position="relative"
         >
-          <VStack spacing={4} align="stretch" w="100%" bottom={0} px={{ base: 2, md: 10 }} py={{ base: 2, md: 10 }}>
+          <VStack spacing={4} align="stretch" w="100%" bottom={0} px={{ base: 5, md: 10 }} py={{ base: 2, md: 10 }}>
             {selectedUser ? (
               msgs.length === 0 ? (
                 <Text color="gray.400" textAlign="center">No messages yet.</Text>
