@@ -81,13 +81,11 @@ const sendmsg = async (req, res) => {
     const receiverSocketId = global.userSocketMap[receiver];
     const senderSocketId = global.userSocketMap[sender.toString()];
 
-    if (!receiverSocketId && !senderSocketId) {
-      return res.status(404).json({ success: false, msg: "User not connected" });
-    }
-    
+    // Emit to receiver
     if (receiverSocketId) {
       global.io.to(receiverSocketId).emit("newmsg", newmsg);
     }
+    // Emit to sender (so sender also gets the new message in real time)
     if (senderSocketId) {
       global.io.to(senderSocketId).emit("newmsg", newmsg);
     }
@@ -98,5 +96,6 @@ const sendmsg = async (req, res) => {
     res.status(500).json({ success: false, msg: error.message || "Server Error" });
   }
 };
+// ...existing code...
 
 module.exports = { getAllUsers, getmsgs, markMsg, sendmsg };
