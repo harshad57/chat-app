@@ -27,8 +27,10 @@ import {
 import { HamburgerIcon } from '@chakra-ui/icons';
 import { Authcontext } from '../../context/authcontext';
 import { Chatcontext } from '../../context/chatcontext';
+import { CloseIcon } from '@chakra-ui/icons';
 
 function Chat() {
+  const [openImage, setOpenImage] = useState(null);
   const [isOtherProfileOpen, setIsOtherProfileOpen] = useState(false);
   const [input, setInput] = useState('');
   const [search, setSearch] = useState('');
@@ -277,7 +279,8 @@ function Chat() {
                               boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
                               maxWidth: '200px',
                               display: 'block'
-                            }} />
+                            }} 
+                            onClick={() => setOpenImage(msg.image)} />
                           )}
                           {msg.text && (
                             <Box mt={msg.image ? 2 : 0}>{msg.text}</Box>
@@ -312,6 +315,46 @@ function Chat() {
             )}
           </VStack>
         </Box>
+
+        {openImage && (
+        <Box
+          position="fixed"
+          top={0}
+          left={0}
+          w="100vw"
+          h="100vh"
+          bg="rgba(0,0,0,0.8)"
+          zIndex={2000}
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          style={{ backdropFilter: 'blur(6px)' }}
+        >
+          <IconButton
+            icon={<CloseIcon />}
+            aria-label="Close"
+            position="absolute"
+            top={6}
+            right={6}
+            size="lg"
+            colorScheme="whiteAlpha"
+            bg="rgba(0,0,0,0.5)"
+            onClick={() => setOpenImage(null)}
+            zIndex={2100}
+          />
+          <img
+            src={openImage}
+            alt="fullscreen"
+            style={{
+              maxWidth: '90vw',
+              maxHeight: '85vh',
+              borderRadius: 12,
+              boxShadow: '0 4px 32px rgba(0,0,0,0.5)',
+              background: 'white'
+            }}
+            />
+        </Box>
+      )}
 
         {/* Input */}
         {selectedImage && (
