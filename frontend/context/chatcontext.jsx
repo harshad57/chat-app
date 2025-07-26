@@ -53,8 +53,12 @@ export const Chatprovider = ({ children }) => {
         if (!socket) return;
 
         socket.on('newmsg', (newmsg) => {
-            if (selectedUser &&
-                (newmsg.sender === selectedUser._id || newmsg.sender === authuser._id && newmsg.receiver === selectedUser._id)
+            if (
+                selectedUser &&
+                (
+                    (newmsg.sender === authuser._id && newmsg.receiver === selectedUser._id) ||
+                    (newmsg.sender === selectedUser._id && newmsg.receiver === authuser._id)
+                )
             ) {
                 newmsg.seen = true;
                 setmsgs((prevMsg) => {
@@ -65,7 +69,7 @@ export const Chatprovider = ({ children }) => {
             } else {
                 setunseenmsg((prevMsg) => ({
                     ...prevMsg, [newmsg.sender]: prevMsg[newmsg.sender] ? prevMsg[newmsg.sender] + 1 : 1
-                }))
+                }));
             }
         })
     }
