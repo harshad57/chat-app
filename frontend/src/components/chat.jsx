@@ -65,18 +65,18 @@ function Chat() {
   }, [selectedUser]);
 
   const sendMessage = async (e) => {
-  e.preventDefault();
-  if (!input.trim() && !selectedImage) return;
+    e.preventDefault();
+    if (!input.trim() && !selectedImage) return;
 
-  setloading(true);
-  try {
-    await sendmsg({ text: input.trim(), image: selectedImage });
-    setInput('');
-    setSelectedImage(null);
-  } finally {
-    setloading(false);
-  }
-};
+    setloading(true);
+    try {
+      await sendmsg({ text: input.trim(), image: selectedImage });
+      setInput('');
+      setSelectedImage(null);
+    } finally {
+      setloading(false);
+    }
+  };
 
   const sendImage = async (e) => {
     const file = e.target.files[0];
@@ -266,10 +266,18 @@ function Chat() {
                           bg={isSender ? 'blue.500' : 'gray.200'}
                           color={isSender ? 'white' : 'gray.800'}
                           overflow="hidden"
-                          textAlign="center"
                         >
                           {msg.image && (
-                            <img src={msg.image} alt="sent" style={{ maxWidth: '200px', minWidth: 'auto', borderRadius: 8, marginBottom: msg.text ? 8 : 0 }} />
+                            <img src={msg.image} alt="sent" style={{
+                              maxWidth: '220px',
+                              maxHeight: '180px',
+                              width: 'auto',
+                              height: 'auto',
+                              borderRadius: 8,
+                              marginBottom: msg.text ? 8 : 0,
+                              objectFit: 'cover',
+                              boxShadow: '0 2px 8px rgba(0,0,0,0.08)'
+                            }} />
                           )}
                           {msg.text && (
                             <Box mt={msg.image ? 2 : 0}>{msg.text}</Box>
@@ -308,7 +316,7 @@ function Chat() {
         {/* Input */}
         {selectedImage && (
           <Box mb={2} display="flex" bg="gray.300" flexDirection="column" justifyContent="center" alignItems="center" p={2} >
-            <img src={selectedImage} alt="preview" style={{ maxWidth: '300px', borderRadius: 8 }}/>
+            <img src={selectedImage} alt="preview" style={{ maxWidth: '300px', borderRadius: 8 }} />
             <Button size="md" color="red.500" mt={2} borderColor="red.500" variant="outline" onClick={() => setSelectedImage(null)}>Remove</Button>
           </Box>
         )}
