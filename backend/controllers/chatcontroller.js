@@ -54,6 +54,7 @@ const markMsg = async (req, res) => {
   }
 };
 
+// ...existing code...
 const sendmsg = async (req, res) => {
   try {
     const { text, image } = req.body;
@@ -78,8 +79,17 @@ const sendmsg = async (req, res) => {
     });
 
     const receiverSocketId = global.userSocketMap[receiver];
+    const senderSocketId = global.userSocketMap[sender.toString()];
+
+    if (!receiverSocketId && !senderSocketId) {
+      return res.status(404).json({ success: false, msg: "User not connected" });
+    }
+    
     if (receiverSocketId) {
       global.io.to(receiverSocketId).emit("newmsg", newmsg);
+    }
+    if (senderSocketId) {
+      global.io.to(senderSocketId).emit("newmsg", newmsg);
     }
 
     res.json({ success: true, newmsg });
