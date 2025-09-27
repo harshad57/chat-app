@@ -126,7 +126,7 @@ function Chat() {
         </Flex>
 
         <Box flex='1' overflowY='auto' display='flex' alignItems='center' flexDirection='column' position='relative' bg='green.50'>
-          <VStack spacing={4} align='stretch' w='100%' px={6} py={4}>
+          <VStack spacing={4} align='stretch' w='100%' px={{base:6, sm:12, md:16}} py={4}>
             {selectedUser ? (msgs.length === 0 ? <Text color='gray.400' textAlign='center'>No messages yet.</Text> : msgs.map((msg, idx) => {
               const isSender = msg.sender === authuser._id;
               return (
