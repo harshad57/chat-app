@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState } from 'react'
 import {
   Box,
   Button,
@@ -11,81 +11,101 @@ import {
   InputGroup,
   InputRightElement,
   IconButton,
-} from '@chakra-ui/react';
-import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
-import axios from 'axios'; // Correct import for axios
-import { useNavigate } from 'react-router-dom'; // Use useNavigate instead of useHistory
-import { Authcontext } from '../../context/authcontext';
+} from '@chakra-ui/react'
+import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
+import { useNavigate } from 'react-router-dom'
+import { Authcontext } from '../../context/authcontext'
 
 function Signup() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate(); // Use useNavigate
-  const {signup} = useContext(Authcontext);
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const navigate = useNavigate()
+  const { signup } = useContext(Authcontext)
 
   const submitHandler = async () => {
-    setLoading(true);
+    setLoading(true)
     if (!email || !name || !password) {
-      alert("Please fill in all fields.");
-      setLoading(false);
-      return;
+      alert('Please fill in all fields.')
+      setLoading(false)
+      return
     }
 
     try {
-      await signup({ name, email, password }); // ✅ call context signup
-      navigate('/'); // ✅ redirect on success
+      await signup({ name, email, password })
+      navigate('/')
     } catch (error) {
-      console.error("Signup error:", error);
+      console.error('Signup error:', error)
     }
 
-    setLoading(false);
-  };
+    setLoading(false)
+  }
 
   return (
     <Box
-      mt={6}
-      rounded="lg"
+      mt={4}
+      rounded="2xl"
       bg={useColorModeValue('white', 'gray.800')}
-      boxShadow="lg"
-      p={8}
+      boxShadow="xl"
+      p={{base:4, sm:8}}
       w="full"
     >
-      <Stack spacing={4}>
-        <Heading fontSize="2xl" color={useColorModeValue('gray.700', 'gray.200')} textAlign="center">
+      <Stack spacing={6}>
+        {/* Heading */}
+        <Heading
+          fontSize="2xl"
+          bgGradient="linear(to-r, green.500, green.600)"
+          bgClip="text"
+          textAlign="center"
+        >
           Create your account
         </Heading>
-        <FormControl id="name">
-          <FormLabel color={useColorModeValue('gray.600', 'gray.300')}>Name</FormLabel>
+
+        {/* Name */}
+        <FormControl id="name" isRequired>
+          <FormLabel color="green.600">Name</FormLabel>
           <Input
             type="text"
-            bg={useColorModeValue('gray.50', 'gray.700')}
+            bg={useColorModeValue('green.50', 'gray.700')}
+            border="1px solid"
+            borderColor="green.200"
+            focusBorderColor="green.500"
             value={name}
             onChange={e => setName(e.target.value)}
-            required
+            rounded="lg"
           />
         </FormControl>
-        <FormControl id="email">
-          <FormLabel color={useColorModeValue('gray.600', 'gray.300')}>Email address</FormLabel>
+
+        {/* Email */}
+        <FormControl id="email" isRequired>
+          <FormLabel color="green.600">Email address</FormLabel>
           <Input
             type="email"
-            bg={useColorModeValue('gray.50', 'gray.700')}
+            bg={useColorModeValue('green.50', 'gray.700')}
+            border="1px solid"
+            borderColor="green.200"
+            focusBorderColor="green.500"
             value={email}
             onChange={e => setEmail(e.target.value)}
-            required
+            rounded="lg"
           />
         </FormControl>
-        <FormControl id="password">
-          <FormLabel color={useColorModeValue('gray.600', 'gray.300')}>Password</FormLabel>
+
+        {/* Password */}
+        <FormControl id="password" isRequired>
+          <FormLabel color="green.600">Password</FormLabel>
           <InputGroup>
             <Input
               type={showPassword ? 'text' : 'password'}
-              bg={useColorModeValue('gray.50', 'gray.700')}
+              bg={useColorModeValue('green.50', 'gray.700')}
+              border="1px solid"
+              borderColor="green.200"
+              focusBorderColor="green.500"
               value={password}
               onChange={e => setPassword(e.target.value)}
-              required
+              rounded="lg"
             />
             <InputRightElement>
               <IconButton
@@ -94,23 +114,29 @@ function Signup() {
                 icon={showPassword ? <ViewOffIcon /> : <ViewIcon />}
                 onClick={() => setShowPassword(!showPassword)}
                 size="md"
-                tabIndex={-1}
+                color="green.500"
               />
             </InputRightElement>
           </InputGroup>
         </FormControl>
+
+        {/* Button */}
         <Button
-          colorScheme="gray"
+          bgGradient="linear(to-r, green.400, green.600)"
+          color="white"
+          _hover={{ bgGradient: 'linear(to-r, green.500, green.700)' }}
           variant="solid"
-          mt={4}
-          isLoading={loading} // Disable button while loading
-          onClick={submitHandler} // Call submitHandler on click
+          mt={2}
+          isLoading={loading}
+          onClick={submitHandler}
+          rounded="lg"
+          fontWeight="600"
         >
           Sign up
         </Button>
       </Stack>
     </Box>
-  );
+  )
 }
 
-export default Signup;
+export default Signup

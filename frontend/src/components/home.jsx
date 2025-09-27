@@ -1,31 +1,83 @@
-import { Box, Container, Text, Tabs, TabList, Tab, TabPanels, TabPanel, Flex } from '@chakra-ui/react'
-import Login from '../auth/login.jsx'
-import Signup from '../auth/signup.jsx'
+import {
+  Box,
+  Container,
+  Text,
+  Tabs,
+  TabList,
+  Tab,
+  TabPanels,
+  TabPanel,
+  Flex,
+} from "@chakra-ui/react";
+import Login from "../auth/login.jsx";
+import Signup from "../auth/signup.jsx";
 
 function Home() {
+  return (
+    <Flex
+      minH="100vh"
+      align="center"
+      justify="center"
+      bg="green.50"
+      px={4}
+    >
+      <Container
+        maxW="lg"
+        bg="white"
+        p={{base:0, sm:6}}
+        borderRadius="2xl"
+        boxShadow="lg"
+        centerContent
+      >
+        {/* Header */}
+        <Box w="100%" p={4} mb={4}>
+          <Text p={4}
+          bg="green.500"
+          w="100%"
+          color="white"
+          textAlign="center"
+          borderRadius="xl"
+          fontWeight="bold"
+          fontSize="28px"
+          boxShadow="sm">Chat App</Text>
+        </Box>
 
-    return (
-        <Flex minH="100vh" align="center" justify="center" bg="gray.200">
-        <Container maxW='xl' centerContent bg='gray.300' p={4} borderRadius='md' display='flex' flexDirection='column' alignItems='center' justifyContent='center'>
-            <Box p={3} bg='gray.500' w='100%' color='white' textAlign='center' borderRadius='md' fontWeight='bold' fontSize='30px'>
-                <Text>Chat App</Text>
-            </Box>
-            <Box mt={8} w='100%'>
-                <Tabs variant='enclosed' colorScheme='gray' borderColor='transparent'>
-                    <TabList justifyContent="space-between" display='flex' gap={5}>
-                        
-                        <Tab bg="gray.400" flex='1'>Sign Up</Tab>
-                        <Tab bg="gray.400" flex='1'>Login</Tab>
-                    </TabList>
-                    <TabPanels>
-                        <TabPanel><Signup /></TabPanel>
-                        <TabPanel><Login /></TabPanel>
-                    </TabPanels>
-                </Tabs>
-            </Box>
-        </Container>
-        </Flex>
-    )
+        {/* Tabs */}
+        <Tabs
+          variant="soft-rounded"
+          colorScheme="green"
+          isFitted
+          w="100%"
+        >
+          <TabList gap={3} px={4}>
+            <Tab
+              _selected={{ bg: "green.500", color: "white" }}
+              borderRadius="lg"
+              fontWeight="600"
+            >
+              Sign Up
+            </Tab>
+            <Tab
+              _selected={{ bg: "green.500", color: "white" }}
+              borderRadius="lg"
+              fontWeight="600"
+            >
+              Login
+            </Tab>
+          </TabList>
+
+          <TabPanels>
+            <TabPanel>
+              <Signup />
+            </TabPanel>
+            <TabPanel>
+              <Login />
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
+      </Container>
+    </Flex>
+  );
 }
 
-export default Home
+export default Home;
