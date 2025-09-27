@@ -132,8 +132,8 @@ function Chat() {
               return (
                 <Flex key={idx} justify={isSender ? 'flex-end' : 'flex-start'} position='relative' pb={4} align='center'>
                   {!isSender && <Avatar name={selectedUser.name} size='sm' mr={2} />}
-                  <Box px={4} py={2} rounded='xl' maxW='60%' bg={isSender ? 'green.500' : 'white'} color={isSender ? 'white' : 'gray.800'}>
-                    {msg.image && <img src={msg.image} alt='sent' style={{ width: '100%', borderRadius: 8, marginBottom: msg.text ? 8 : 0 }} onClick={() => setOpenImage(msg.image)} />}
+                  <Box px={4} py={2} rounded='xl' maxW={{ base: '80%', md: '60%', lg: '45%' }} bg={isSender ? 'green.500' : 'white'} color={isSender ? 'white' : 'gray.800'}>
+                    {msg.image && <img src={msg.image} alt='sent' style={{ width: '100%', height: 'auto', borderRadius: 8, marginBottom: msg.text ? 8 : 0, objectFit: 'cover' }} onClick={() => setOpenImage(msg.image)} />}
                     {msg.text && <Text>{msg.text}</Text>}
                   </Box>
                   {isSender && <Avatar name={profile.name} size='sm' ml={2} />}
@@ -145,7 +145,7 @@ function Chat() {
           </VStack>
         </Box>
 
-        {selectedImage && <Box mb={2} display='flex' flexDirection='column' alignItems='center' p={2} bg='green.100'><img src={selectedImage} alt='preview' style={{ maxWidth: 300, borderRadius: 8 }} /><Button size='sm' mt={2} colorScheme='red' variant='outline' onClick={() => setSelectedImage(null)}>Remove</Button></Box>}
+        {selectedImage && <Box mb={2} display='flex' flexDirection='column' alignItems='center' p={2} bg='green.100'><img src={selectedImage} alt='preview' style={{ maxWidth:'90%', maxHeight:'50vh', borderRadius: 8 }} /><Button size='sm' mt={2} colorScheme='red' variant='outline' onClick={() => setSelectedImage(null)}>Remove</Button></Box>}
         <Flex p={4} bg='white' borderTop='1px' borderColor='green.200' gap={2}>
           <Input flex={3} placeholder='Type your message...' value={input} onChange={e => setInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && sendMessage(e)} isDisabled={!selectedUser || loading} borderColor='green.300' />
           <Input type='file' id='image' display='none' accept='image/png, image/jpeg, image/jpg' onChange={sendImage} isDisabled={!selectedUser || loading} />
@@ -192,7 +192,7 @@ function Chat() {
 
         {openImage && <Box position='fixed' top={0} left={0} w='100vw' h='100vh' bg='rgba(0,0,0,0.8)' zIndex={2000} display='flex' alignItems='center' justifyContent='center' style={{ backdropFilter:'blur(6px)' }}>
           <IconButton icon={<CloseIcon />} aria-label='Close' position='absolute' top={6} right={6} size='lg' colorScheme='whiteAlpha' bg='rgba(0,0,0,0.5)' onClick={() => setOpenImage(null)} zIndex={2100} />
-          <img src={openImage} alt='fullscreen' style={{ maxWidth:'90vw', maxHeight:'85vh', borderRadius:12, boxShadow:'0 4px 32px rgba(0,0,0,0.5)', background:'white' }} />
+          <img src={openImage} alt='fullscreen' style={{ maxWidth:'90%', maxHeight:'80vh', borderRadius:12, boxShadow:'0 4px 32px rgba(0,0,0,0.5)', background:'white', objectFit:'contain' }} />
         </Box>}
       </Flex>
     </Flex>
