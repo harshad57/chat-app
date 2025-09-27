@@ -146,7 +146,7 @@ function Chat() {
         </Box>
 
         {selectedImage && <Box mb={2} display='flex' flexDirection='column' alignItems='center' p={2} bg='green.100'><img src={selectedImage} alt='preview' style={{ maxWidth:'70%', maxHeight:'250px', borderRadius: 8 }} /><Button size='sm' mt={2} colorScheme='red' variant='outline' onClick={() => setSelectedImage(null)}>Remove</Button></Box>}
-        <Flex p={4} bg='white' borderTop='1px' borderColor='green.200' gap={2}>
+        <Flex p={4} bg='white' position="fixed" bottom={0} width="100%" borderTop='1px' borderColor='green.200' gap={2}>
           <Input flex={3} placeholder='Type your message...' value={input} onChange={e => setInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && sendMessage(e)} isDisabled={!selectedUser || loading} borderColor='green.300' />
           <Input type='file' id='image' display='none' accept='image/png, image/jpeg, image/jpg' onChange={sendImage} isDisabled={!selectedUser || loading} />
           <label htmlFor='image'><img src='https://img.icons8.com/ios-filled/50/000000/attach.png' alt='attach' style={{ width:30, height:30, cursor:'pointer' }} /></label>
